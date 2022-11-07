@@ -1,4 +1,4 @@
-package projekt;
+package rowReader;
 
 public class Row {
     private Boolean keepRunning;
@@ -9,36 +9,46 @@ public class Row {
     private Integer charCount;
 
 
-    public Row(String lineInput) {
+    public Row() {
 
-        // Spara attributet för att användas senare
+        keepRunning = true;
         rowCount = 0;
+        longestWord = "";
+        longestWordCount = 0;
+        wordCount = 0;
+        charCount = 0;
 
-        // Antal tecken i raden
+    }
+
+    public void populate(String lineInput) {
+
+        // count number of characters in the line
         charCount = lineInput.length();
 
-        // dela upp raden i ord
+        // split line into an array of words, separated by whitespace
         String[] wordArray = lineInput.split(" ");
 
-        // räkna antalet ord
+        // count number of words in the line
         wordCount = wordArray.length;
 
-        // kolla vilket som är det längsta ordet i raden
+        // find the (first) longest word in the line
         longestWordCount = 0;
+        keepRunning = true;
         for (String s : wordArray) {
             s = s.toLowerCase();
+
+            // check if the line contains the word "stop", and change keepRunning to false if it does
             if (s.equals("stop")) {
                 keepRunning = false;
-                wordCount--;
-            } else keepRunning = true;
+            }
 
+            // check if the current word is the longest yet, and if it is, save it
             if (s.length() > longestWordCount) {
                 longestWordCount = s.length();
                 longestWord = s;
             }
-         }
+        }
     }
-
 
     public Integer getRowsCount() {
 
@@ -68,16 +78,18 @@ public class Row {
 
     }
 
-    public Boolean supposedToRun() {
+    public Boolean getKeepRunning() {
 
         return keepRunning;
 
     }
     public void analyze(Row input) {
-        rowCount++;
-        wordCount += input.wordCount;
-        charCount += input.charCount;
-        if (longestWordCount < input.longestWordCount)
+
+        rowCount++; // increase number of lines
+        wordCount += input.wordCount; // add number of words to the sum of words in the previous lines
+        charCount += input.charCount; // add number of characters to the sum of characters in the previous lines
+
+        if (longestWordCount < input.longestWordCount) // check if the new line contains a longer word than previous lines
         {
             longestWord = input.longestWord;
             longestWordCount = input.longestWordCount;

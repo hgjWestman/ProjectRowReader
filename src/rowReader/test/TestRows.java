@@ -1,23 +1,24 @@
-package projekt.test;
+package rowReader.test;
 
 import org.junit.Test;
-import projekt.Row;
+import rowReader.Row;
 
 import static org.junit.Assert.assertEquals;
 // import static org.junit.Assert.assertNotEquals;
 
 
 public class TestRows {
-    //Testa 1 och få resultatet 1 ifrån FizzBuzz
+
     @Test
     public void findStopInLine() {
         //Arrange
-        Row testRow = new Row("Stop in the name of love");
+        Row testRow = new Row();
+        testRow.populate("Stop in the name of love");
 
         Boolean expected = false;
 
         //Act
-        Boolean actual = testRow.supposedToRun();
+        Boolean actual = testRow.getKeepRunning();
 
         //Assert
         assertEquals(expected, actual);
@@ -26,7 +27,8 @@ public class TestRows {
     @Test
     public void longestWordSingleLine() {
         //Arrange
-        Row testRow = new Row("I'm so excited");
+        Row testRow = new Row();
+        testRow.populate("I'm so excited");
 
         String expected = "excited";
 
@@ -40,8 +42,10 @@ public class TestRows {
     @Test
     public void calculateCharsMultiLine() {
         //Arrange
-        Row no1 = new Row("And I was meant for so much more");
-        Row no2 = new Row("And I found a dream worth fighting for");
+        Row no1 = new Row();
+        no1.populate("And I was meant for so much more");
+        Row no2 = new Row();
+        no2.populate("And I found a dream worth fighting for");
 
         no1.analyze(no2);
 
@@ -57,8 +61,10 @@ public class TestRows {
     @Test
     public void calculateWordsMultiLine() {
         //Arrange
-        Row no1 = new Row("And I was meant for so much more");
-        Row no2 = new Row("And I found a dream worth fighting for");
+        Row no1 = new Row();
+        no1.populate("And I was meant for so much more");
+        Row no2 = new Row();
+        no2.populate("And I found a dream worth fighting for");
         no1.analyze(no2);
 
         Integer expected = 16;
